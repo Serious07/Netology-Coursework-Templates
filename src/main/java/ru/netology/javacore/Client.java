@@ -26,21 +26,14 @@ public class Client {
                         currentCommand.equalsIgnoreCase("quit")) {
                     System.out.println("Программа остановлена");
                     break;
-                } else if (subSplitCommand.length > 1 && subSplitCommand[0].equalsIgnoreCase("add")) {
-                    String command = "";
-                    String task = "";
-
-                    if(subSplitCommand.length >= 1){
-                        command = subSplitCommand[0].toUpperCase();
-                    }
-
-                    if(subSplitCommand.length >= 2){
-                        task = subSplitCommand[1];
-                    }
+                } else if (subSplitCommand.length >= 1) {
+                    String command = subSplitCommand[0].toUpperCase();;
+                    String task = getTask(subSplitCommand);
 
                     String jsonString = "{ \"type\": \"" + command + "\", \"task\": \"" + task + "\" }";
                     out.println(jsonString);
                     System.out.println("Данные переданы на сервер.");
+                    System.out.println(jsonString);
 
                     System.out.println("Ответ от сервера:");
                     System.out.println(in.readLine());
@@ -49,5 +42,20 @@ public class Client {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static String getTask(String[] fullCommand){
+        if (fullCommand.length <= 1) return "";
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(int i = 1; i < fullCommand.length; i++){
+            stringBuilder.append(fullCommand[i]);
+            if (i != (fullCommand.length - 1)) {
+                stringBuilder.append(" ");
+            }
+        }
+
+        return stringBuilder.toString();
     }
 }

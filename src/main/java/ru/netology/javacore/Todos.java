@@ -1,13 +1,14 @@
 package ru.netology.javacore;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Todos {
     List<String> tasks = new ArrayList();
     private final int tasksLimit = 7;
 
     public void addTask(String task) {
-        if(task.length() < tasksLimit) {
+        if(tasks.size() < tasksLimit) {
             tasks.add(task);
         }
     }
@@ -17,12 +18,16 @@ public class Todos {
     }
 
     public String getAllTasks() {
-        String[] result = (String[]) tasks.stream().sorted().toArray();
+        List<String> result = tasks.stream().
+                                    sorted(Comparator.naturalOrder()).
+                                    collect(Collectors.toList());
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (String s : result){
-            stringBuilder.append(s);
-            stringBuilder.append(" ");
+        for (int i = 0; i < result.size(); i++){
+            stringBuilder.append(result.get(i));
+            if(i != result.size() - 1) {
+                stringBuilder.append(", ");
+            }
         }
 
         return stringBuilder.toString();
