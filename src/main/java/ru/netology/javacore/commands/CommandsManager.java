@@ -18,6 +18,10 @@ public class CommandsManager {
         return instance;
     }
 
+    public void reset(){
+        commands.clear();
+    }
+
     private List<Command> commands = new ArrayList();
 
     public List<Command> getCommands() {

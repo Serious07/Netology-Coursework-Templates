@@ -1,5 +1,8 @@
 package ru.netology.javacore;
 
+import ru.netology.javacore.commands.CommandsManager;
+import ru.netology.javacore.commands.tasks.CommandGetAllTasks;
+
 import java.util.*;
 
 /*  Код написал Лыткин Александр Игоревич (aka Serious07) в 2022 г.
@@ -18,7 +21,13 @@ public class Todos {
     }
 
     public void addTask(String task){
-        tasks.add(task);
+        if(tasks.size() < tasksLimit) {
+            tasks.add(task);
+        }
+    }
+
+    public String getAllTasks(){
+        return CommandsManager.getInstance().executeCommand(new CommandGetAllTasks(this));
     }
 
     public int getTasksLimit() {
