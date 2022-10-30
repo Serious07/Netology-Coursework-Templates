@@ -2,17 +2,21 @@ package ru.netology.javacore;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
+import ru.netology.javacore.commands.*;
+import ru.netology.javacore.commands.base.CommandRestore;
+import ru.netology.javacore.commands.tasks.CommandAddTask;
+import ru.netology.javacore.commands.tasks.CommandGetAllTasks;
+import ru.netology.javacore.commands.tasks.CommandRemoveTask;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
+/*  Код написал Лыткин Александр Игоревич (aka Serious07) в 2022 г.
+    Курсовая работа на тему "Менеджер задач" для Нетологии */
 public class TodoServer {
     private int port;
     private Todos todos;
-
     public TodoServer(int port, Todos todos) {
         this.port = port;
         this.todos = todos;
@@ -42,13 +46,15 @@ public class TodoServer {
                         String command = dataCommand.get("type").getAsString();
 
                         if (command.equalsIgnoreCase("ADD")) {
-                            todos.addTask(task);
+                            CommandsManager.getInstance().executeCommand(new CommandAddTask(todos, task));
                         } else if (command.equalsIgnoreCase("REMOVE")) {
-                            todos.removeTask(task);
+                            CommandsManager.getInstance().executeCommand(new CommandRemoveTask(todos, task));
+                        } else if (command.equalsIgnoreCase("RESTORE")){
+                            CommandsManager.getInstance().executeCommand(new CommandRestore());
                         }
 
                         // Подготовка ответа на запрос
-                        String answer = todos.getAllTasks();
+                        String answer = CommandsManager.getInstance().executeCommand(new CommandGetAllTasks(todos));
 
                         System.out.println("Сформированный ответ для клиента: ");
                         System.out.println(answer);

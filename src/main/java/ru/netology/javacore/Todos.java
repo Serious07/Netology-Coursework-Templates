@@ -1,36 +1,27 @@
 package ru.netology.javacore;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
+/*  Код написал Лыткин Александр Игоревич (aka Serious07) в 2022 г.
+    Курсовая работа на тему "Менеджер задач" для Нетологии */
 public class Todos {
-    List<String> tasks = new ArrayList();
-    private final int tasksLimit = 7;
+    private List<String> tasks = new ArrayList();
+    private int tasksLimit = 7;
 
-    public void addTask(String task) {
-        if(tasks.size() < tasksLimit) {
-            tasks.add(task);
-        }
+    // Getters
+    public List<String> getTasks() {
+        return tasks;
     }
 
-    public void removeTask(String task) {
+    public void removeTask(String task){
         tasks.remove(task);
     }
 
-    public String getAllTasks() {
-        List<String> result = tasks.stream().
-                                    sorted(Comparator.naturalOrder()).
-                                    collect(Collectors.toList());
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < result.size(); i++){
-            stringBuilder.append(result.get(i));
-            if(i != result.size() - 1) {
-                stringBuilder.append(", ");
-            }
-        }
-
-        return stringBuilder.toString();
+    public void addTask(String task){
+        tasks.add(task);
     }
 
+    public int getTasksLimit() {
+        return tasksLimit;
+    }
 }

@@ -6,11 +6,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/*  Код написал Лыткин Александр Игоревич (aka Serious07) в 2022 г.
+    Курсовая работа на тему "Менеджер задач" для Нетологии */
+
 public class Client {
     private static int port = 8989;
     private static String ip = "localhost";
 
     public static void main(String[] args) {
+        welcomeMessage();
+
         while (true) {
             try (Socket clientSocket = new Socket(ip, port);
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -32,9 +37,6 @@ public class Client {
 
                     String jsonString = "{ \"type\": \"" + command + "\", \"task\": \"" + task + "\" }";
                     out.println(jsonString);
-                    System.out.println("Данные переданы на сервер.");
-                    System.out.println(jsonString);
-
                     System.out.println("Ответ от сервера:");
                     System.out.println(in.readLine());
                 }
@@ -44,7 +46,7 @@ public class Client {
         }
     }
 
-    public static String getTask(String[] fullCommand){
+    private static String getTask(String[] fullCommand){
         if (fullCommand.length <= 1) return "";
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -57,5 +59,15 @@ public class Client {
         }
 
         return stringBuilder.toString();
+    }
+
+    private static void welcomeMessage(){
+        System.out.println("        Менеджер задач      ");
+        System.out.println("============================");
+        System.out.println("      Доступные команды:    ");
+        System.out.println("============================");
+        System.out.println("add [Задача] - Добавить задачу");
+        System.out.println("remove [Задача] - Удалить задачу");
+        System.out.println("restore - Отменить последнее действие");
     }
 }
