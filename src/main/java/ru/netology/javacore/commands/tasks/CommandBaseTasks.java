@@ -43,4 +43,8 @@ public class CommandBaseTasks extends CommandBase {
     protected void addTask(String task){
         todos.addTask(task);
     }
+
+    protected String getAllTasks(){
+        return todos.getAllTasks();
+    }
 }

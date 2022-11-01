@@ -17,19 +17,7 @@ public class CommandGetAllTasks extends CommandBaseTasks implements CommandGetSt
 
     @Override
     public String getResult() {
-        List<String> result = getTasks().stream().
-                sorted(Comparator.naturalOrder()).
-                collect(Collectors.toList());
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < result.size(); i++){
-            stringBuilder.append(result.get(i));
-            if(i != result.size() - 1) {
-                stringBuilder.append(", ");
-            }
-        }
-
-        return stringBuilder.toString();
+        return getAllTasks();
     }
 
     @Override

@@ -40,11 +40,16 @@ public class CommandsManager {
     }
 
     public CommandUndo getLastUndoCommand(){
-        if(commands.size() == 0) return null;
+        if(commands.isEmpty()) return null;
+
+        CommandUndo commandUndo;
 
         for(int i = getLastElementIndex(); i >= 0; i--){
-            if(commands.get(i) instanceof CommandUndo){
-                return (CommandUndo) commands.get(i);
+            try{
+                commandUndo = (CommandUndo) commands.get(i);
+                return commandUndo;
+            }catch (ClassCastException ex){
+
             }
         }
 
@@ -56,8 +61,11 @@ public class CommandsManager {
     }
 
     public void executeCommand(CommandExecute command){
-        if(command instanceof Command){
-            commands.add((Command)command);
+        try {
+            Command baseCommand = (Command) command;
+            commands.add(baseCommand);
+        } catch (ClassCastException ex){
+
         }
 
         command.execute();
@@ -75,10 +83,13 @@ public class CommandsManager {
 
         System.out.println("Текущий список команд: ");
 
+        CommandToString commandToString;
+
         for(Command command : commands){
-            if(command instanceof CommandToString){
-                System.out.println("Command " + counter + ": " + ((CommandToString) command).commandToString());
-            } else {
+            try{
+                commandToString = (CommandToString) command;
+                System.out.println("Command " + counter + ": " + commandToString.commandToString());
+            } catch (ClassCastException ex){
                 System.out.println("Command " + counter);
             }
 

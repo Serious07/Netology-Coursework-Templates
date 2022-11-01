@@ -45,12 +45,16 @@ public class TodoServer {
                         String task = dataCommand.get("task").getAsString();
                         String command = dataCommand.get("type").getAsString();
 
-                        if (command.equalsIgnoreCase("ADD")) {
-                            CommandsManager.getInstance().executeCommand(new CommandAddTask(todos, task));
-                        } else if (command.equalsIgnoreCase("REMOVE")) {
-                            CommandsManager.getInstance().executeCommand(new CommandRemoveTask(todos, task));
-                        } else if (command.equalsIgnoreCase("RESTORE")){
-                            CommandsManager.getInstance().executeCommand(new CommandRestore());
+                        switch(command){
+                            case "ADD":
+                                CommandsManager.getInstance().executeCommand(new CommandAddTask(todos, task));
+                                break;
+                            case "REMOVE":
+                                CommandsManager.getInstance().executeCommand(new CommandRemoveTask(todos, task));
+                                break;
+                            case "RESTORE":
+                                CommandsManager.getInstance().executeCommand(new CommandRestore());
+                                break;
                         }
 
                         // Подготовка ответа на запрос
