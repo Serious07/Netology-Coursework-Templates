@@ -7,7 +7,7 @@ import ru.netology.javacore.commands.interfaces.CommandUndo;
 
 /*  Код написал Лыткин Александр Игоревич (aka Serious07) в 2022 г.
     Курсовая работа на тему "Менеджер задач" для Нетологии */
-public class CommandRestore extends CommandBase implements CommandExecute, CommandToString {
+public class CommandRestore extends CommandBase {
     @Override
     public void execute() {
         getLastUndoCommand().undo();
@@ -17,5 +17,10 @@ public class CommandRestore extends CommandBase implements CommandExecute, Comma
     @Override
     public String commandToString() {
         return "Restore";
+    }
+
+    @Override
+    public boolean isHasUndo() {
+        return false;
     }
 }

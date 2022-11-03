@@ -1,7 +1,6 @@
 package ru.netology.javacore.commands;
 
 import ru.netology.javacore.commands.interfaces.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,14 +41,15 @@ public class CommandsManager {
     public CommandUndo getLastUndoCommand(){
         if(commands.isEmpty()) return null;
 
-        CommandUndo commandUndo;
+        boolean isCommandHasUndo;
+        Command currentCommand;
 
         for(int i = getLastElementIndex(); i >= 0; i--){
-            try{
-                commandUndo = (CommandUndo) commands.get(i);
-                return commandUndo;
-            }catch (ClassCastException ex){
+            currentCommand = commands.get(i);
+            isCommandHasUndo = ((CommandHasUndo) currentCommand).isHasUndo();
 
+            if(isCommandHasUndo) {
+                return (CommandUndo) currentCommand;
             }
         }
 
@@ -61,13 +61,7 @@ public class CommandsManager {
     }
 
     public void executeCommand(CommandExecute command){
-        try {
-            Command baseCommand = (Command) command;
-            commands.add(baseCommand);
-        } catch (ClassCastException ex){
-
-        }
-
+        commands.add((Command) command);
         command.execute();
 
         // Дебаг
@@ -86,12 +80,7 @@ public class CommandsManager {
         CommandToString commandToString;
 
         for(Command command : commands){
-            try{
-                commandToString = (CommandToString) command;
-                System.out.println("Command " + counter + ": " + commandToString.commandToString());
-            } catch (ClassCastException ex){
-                System.out.println("Command " + counter);
-            }
+            System.out.println("Command " + counter + ": " + ((CommandToString) command).commandToString());
 
             counter++;
         }

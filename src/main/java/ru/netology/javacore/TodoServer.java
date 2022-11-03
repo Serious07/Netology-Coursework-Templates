@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import ru.netology.javacore.commands.*;
 import ru.netology.javacore.commands.base.CommandRestore;
+import ru.netology.javacore.commands.interfaces.CommandExecute;
+import ru.netology.javacore.commands.interfaces.CommandGetStringResult;
 import ru.netology.javacore.commands.tasks.CommandAddTask;
 import ru.netology.javacore.commands.tasks.CommandGetAllTasks;
 import ru.netology.javacore.commands.tasks.CommandRemoveTask;
@@ -47,18 +49,18 @@ public class TodoServer {
 
                         switch(command){
                             case "ADD":
-                                CommandsManager.getInstance().executeCommand(new CommandAddTask(todos, task));
+                                CommandsManager.getInstance().executeCommand((CommandExecute) new CommandAddTask(todos, task));
                                 break;
                             case "REMOVE":
-                                CommandsManager.getInstance().executeCommand(new CommandRemoveTask(todos, task));
+                                CommandsManager.getInstance().executeCommand((CommandExecute) new CommandRemoveTask(todos, task));
                                 break;
                             case "RESTORE":
-                                CommandsManager.getInstance().executeCommand(new CommandRestore());
+                                CommandsManager.getInstance().executeCommand((CommandExecute) new CommandRestore());
                                 break;
                         }
 
                         // Подготовка ответа на запрос
-                        String answer = CommandsManager.getInstance().executeCommand(new CommandGetAllTasks(todos));
+                        String answer = CommandsManager.getInstance().executeCommand((CommandGetStringResult) new CommandGetAllTasks(todos));
 
                         System.out.println("Сформированный ответ для клиента: ");
                         System.out.println(answer);
