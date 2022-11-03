@@ -18,9 +18,4 @@ public class CommandRestore extends CommandBase {
     public String commandToString() {
         return "Restore";
     }
-
-    @Override
-    public boolean isHasUndo() {
-        return false;
-    }
 }
